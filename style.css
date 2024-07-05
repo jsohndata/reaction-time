@@ -1,36 +1,36 @@
 body {
-    font-family: 'Montserrat', sans-serif;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
-    background: linear-gradient(135deg, #f093fb, #f5576c); 
-    color: white;
-    text-align: center; 
-    transition: background 1s ease; 
-  }
-  
-  h1, h2, p {
-    margin: 0;
-    padding: 0;
-  }
-  
-  h1 {
-    font-size: 4rem;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); 
-  }
-  
-  h2 {
-    font-size: 1.5rem;
-    margin: 1rem 0;
-  }
-  
-  p {
-    font-size: 1.5rem;
-    margin: 0.5rem 0;
-  }
+  font-family: 'Montserrat', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  background: linear-gradient(135deg, #f093fb, #f5576c);
+  color: white;
+  text-align: center;
+  transition: background 1s ease;
+}
+
+h1, h2, p {
+  margin: 1rem 0; /* Consistent vertical spacing */
+}
+
+h1 {
+  font-size: clamp(3rem, 8vw, 5rem); /* Responsive heading size */
+  line-height: 1.2; /* Improved line height for readability */
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+h2 {
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  line-height: 1.4;
+}
+
+p {
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  line-height: 1.6;
+}
   
   .container {
     width: clamp(320px, 80vw, 600px); /* Responsive width adjustment */
