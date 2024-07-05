@@ -47,6 +47,10 @@ body {
       width: 500px; /* Narrower width on desktops */
     }
   }
+
+  #github-link, #mozarts-ghost {
+    font-size: 0.8rem;
+  }
   
   #emoji {
     font-size: 120px; 
