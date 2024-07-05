@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Reaction Time Test</title>
+<style>
+#emoji {
+  font-size: 100px; 
+  position: absolute;
+  display: none; 
+}
+</style>
+</head>
+<body>
+  <h1>Test Your Reaction Time</h1>
+  <p>Click/tap the emoji as quickly as you can when it appears.</p>
+  <p id="timeTaken"></p>
+  <p id="averageTime"></p> 
+
+  <div id="emoji"></div> 
+
+  <script>
+    const emojis = ["✨", "🚀", "🎉", "🍕", "🐱", "🌈", "🤔", "🫥", "😱", "👩🏽‍🚀", "🧟", "🦊","👑","🐣","🐱","🐼","🦁","🦄","🦤","🦜","🍄","🌞","🌊","🥑"];
+    let startTimestamp;
+    let emoji = document.getElementById("emoji");
+    let timeTakenDisplay = document.getElementById("timeTaken");
+    let averageTimeDisplay = document.getElementById("averageTime");
+    let emojiSize = 100; 
+    let totalTime = 0;
+    let roundsPlayed = 0;
+
+    function appearAfterDelay() {
+      let delay = Math.random() * 2000 + 1000; 
+      setTimeout(() => {
+        startTimestamp = Date.now();
+
+        let maxX = window.innerWidth - emojiSize;
+        let maxY = window.innerHeight - emojiSize;
+        emoji.style.left = Math.random() * maxX + "px";
+        emoji.style.top = Math.random() * maxY + "px";
+
+        emojiSize = Math.max(emojiSize - 2, 20); // Adjusted minimum size
+        emoji.style.fontSize = emojiSize + "px";
+
+        emoji.textContent = getRandomEmoji(); 
+        emoji.style.display = "block"; 
+      }, delay);
+    }
+
+    function getRandomEmoji() {
+      return emojis[Math.floor(Math.random() * emojis.length)];
+    }
+
+    emoji.addEventListener("click", handleEmojiClick);
+    emoji.addEventListener("touchstart", handleEmojiClick);
+
+    function handleEmojiClick() {
+      let endTimestamp = Date.now();
+      let reactionTime = (endTimestamp - startTimestamp) / 1000;
+      totalTime += reactionTime;
+      roundsPlayed++;
+      let averageTime = (totalTime / roundsPlayed).toFixed(3);
+
+      timeTakenDisplay.textContent = "Your reaction time: " + reactionTime + " seconds";
+      averageTimeDisplay.textContent = "Average reaction time: " + averageTime + " seconds";
+
+      emoji.style.display = "none"; 
+      appearAfterDelay(); 
+    }
+
+    appearAfterDelay();
+  </script>
+</body>
+</html>
+
