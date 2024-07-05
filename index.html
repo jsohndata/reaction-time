@@ -3,10 +3,49 @@
 <head>
 <title>Reaction Time Test</title>
 <style>
+body {
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  background: linear-gradient(135deg, #FF5733, #3498DB);
+  color: white;
+  transition: background 1s ease;
+}
+
+h1 {
+  margin-bottom: 20px;
+  font-size: 3em; 
+}
+
+p {
+  margin: 10px 0;
+  font-size: 1.2em; 
+}
+
 #emoji {
-  font-size: 100px; 
+  font-size: 100px;
   position: absolute;
-  display: none; 
+  display: none;
+}
+
+#startButton {
+  background-color: #2ECC71; 
+  color: white;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2em;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+#countdown {
+  font-size: 2em;
+  margin-top: 20px;
 }
 </style>
 </head>
@@ -16,6 +55,9 @@
   <p id="timeTaken"></p>
   <p id="averageTime"></p> 
 
+  <button id="startButton">Start</button>
+  <p id="countdown"></p>
+
   <div id="emoji"></div> 
 
   <script>
@@ -24,11 +66,35 @@
     let emoji = document.getElementById("emoji");
     let timeTakenDisplay = document.getElementById("timeTaken");
     let averageTimeDisplay = document.getElementById("averageTime");
+    let countdownDisplay = document.getElementById("countdown");
+    let startButton = document.getElementById("startButton");
     let emojiSize = 100; 
     let totalTime = 0;
     let roundsPlayed = 0;
+    let gameStarted = false;
+
+    startButton.addEventListener("click", startGame);
+
+    function startGame() {
+      startButton.style.display = "none";
+      let countdown = 3;
+      countdownDisplay.textContent = countdown;
+
+      let countdownInterval = setInterval(() => {
+        countdown--;
+        countdownDisplay.textContent = countdown;
+        if (countdown === 0) {
+          clearInterval(countdownInterval);
+          countdownDisplay.style.display = "none";
+          gameStarted = true;
+          appearAfterDelay(); 
+        }
+      }, 1000);
+    }
 
     function appearAfterDelay() {
+      if (!gameStarted) return; // Don't start until the game is started
+
       let delay = Math.random() * 2000 + 1000; 
       setTimeout(() => {
         startTimestamp = Date.now();
@@ -38,7 +104,7 @@
         emoji.style.left = Math.random() * maxX + "px";
         emoji.style.top = Math.random() * maxY + "px";
 
-        emojiSize = Math.max(emojiSize - 2, 20); // Adjusted minimum size
+        emojiSize = Math.max(emojiSize - 2, 20);
         emoji.style.fontSize = emojiSize + "px";
 
         emoji.textContent = getRandomEmoji(); 
@@ -64,11 +130,32 @@
       averageTimeDisplay.textContent = "Average reaction time: " + averageTime + " seconds";
 
       emoji.style.display = "none"; 
-      appearAfterDelay(); 
+      appearAfterDelay();
     }
+  let gradientInterval = setInterval(changeBackground, 4000); // Change every 4 seconds
 
-    appearAfterDelay();
+function changeBackground() {
+  const randomAngle = Math.random() * 360;
+  const randomColors = [
+    [getRandomColor(), getRandomColor()],
+    [getRandomColor(), getRandomColor(), getRandomColor()],
+    [getRandomColor(), getRandomColor(), getRandomColor(), getRandomColor()]
+  ];
+
+  const randomGradientType = Math.random() < 0.5 ? 'linear-gradient' : 'radial-gradient';
+
+  document.body.style.background = `${randomGradientType}(${randomAngle}deg, ${randomColors[Math.floor(Math.random() * randomColors.length)]})`;
+}
+
+function getRandomColor() {
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
   </script>
 </body>
 </html>
-
